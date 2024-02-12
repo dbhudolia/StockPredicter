@@ -2,8 +2,6 @@ import sys
 
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
-#yahoo finance as data source
-#pip install yfinance
 import yfinance as yf
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,7 +18,6 @@ def getmethod():
 
 
 #creating dataset in time series for LSTM model 
-#X[100,120,140,160,180] : Y[200]
 def create_ds(dataset,step):
     Xtrain, Ytrain = [], []
     for i in range(len(dataset)-step-1):
@@ -174,7 +171,6 @@ def postmethod():
 
     #Training model with adam optimizer and mean squared error loss function
     model.compile(loss='mean_squared_error',optimizer='adam')
-    #model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=100,batch_size=64)
     model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=40,batch_size=64)
 
     #Predicitng on train and test data
@@ -219,7 +215,6 @@ def postmethod():
             i=i+1
         
 
-    #print(lst_output)
 
     ds_new = ds_scaled.tolist()
     ds_new.extend(lst_output)
